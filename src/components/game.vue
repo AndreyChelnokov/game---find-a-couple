@@ -6,118 +6,41 @@
           :img="card.img"
           :key="index"
           :id="card.id"
-          @pushCard="pushCard"
-          @removeCard="removeCard"
+          :fake-id="card.fakeId"
       />
+    </div>
+
+    <div class="game__found found">
+      <GameFound v-for="(img, index) in foundCardImgList" :key="index" :img="img" />
     </div>
   </div>
 </template>
 
 <script>
-import GameCard from './game-card'
+import GameCard from './game-card';
+import GameFound from './game-found';
+
 export default {
   name: 'Game',
   data: function () {
     return {
-      currentCardArray: [],
-      cards: [
-        {
-          img: '1.jpeg',
-          id: 1,
-        },
-        {
-          img: '2.jpeg',
-          id: 2,
-        },
-        {
-          img: '3.jpeg',
-          id: 3,
-        },
-        {
-          img: '4.jpeg',
-          id: 4,
-        },
-        {
-          img: '5.jpeg',
-          id: 5,
-        },
-        {
-          img: '6.jpeg',
-          id: 6,
-        },
-        {
-          img: '7.jpeg',
-          id: 7,
-        },
-        {
-          img: '8.png',
-          id: 8,
-        },
-        {
-          img: '9.jpeg',
-          id: 9,
-        },
-        {
-          img: '10.png',
-          id: 10,
-        },
-        {
-          img: '11.png',
-          id: 11,
-        },
-        {
-          img: '12.png',
-          id: 12,
-        },
-        {
-          img: '13.jpeg',
-          id: 13,
-        },
-        {
-          img: '14.jpeg',
-          id: 14,
-        },
-        {
-          img: '15.png',
-          id: 15,
-        },
-        {
-          img: '16.jpeg',
-          id: 16,
-        },
-        {
-          img: '17.jpeg',
-          id: 17,
-        },
-        {
-          img: '18.jpeg',
-          id: 18,
-        }
-      ]
     }
   },
   computed: {
-    doubleArray: function () {
-      return [...this.cards, ...this.cards]
+    cards: function () {
+      return this.$store.state.cards;
     },
+    // doubleArray: function () {
+    //   return [...this.cards, ...this.cards]
+    // },
     cardsInRandomOrder: function () {
-      return this.compareRandom(this.doubleArray)
+      return this.compareRandom(this.cards)
+    },
+    foundCardImgList: function () {
+      return this.$store.state.foundCardsArrayImg;
     }
   },
   methods: {
-    pushCard: function(eventId) {
-      this.currentCardArray.push(eventId);
-
-      console.log(this.currentCardArray)
-    },
-    removeCard: function(eventId) {
-      const indexItem = this.currentCardArray.indexOf(eventId);
-      if (indexItem >= 0) {
-        this.currentCardArray.splice(indexItem, 1)
-      }
-
-      console.log(this.currentCardArray)
-    },
     compareRandom: function (arr) {
       let count = 0;
       function rand() {
@@ -129,7 +52,8 @@ export default {
     }
   },
   components: {
-    GameCard
+    GameCard,
+    GameFound
   }
 }
 

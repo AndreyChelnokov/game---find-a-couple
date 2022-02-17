@@ -1,5 +1,11 @@
 <template>
-  <div @click="changeCard" :class="isActiveCart ? 'active': ''" :data-id="id" class="game-card">
+  <div
+      @click="changeCard"
+      :class="{ active: isActiveCart, found: isFound }"
+      :data-id="id"
+      :data-fake-id="fakeId"
+      class="game-card"
+  >
       <div class="game-card__content-wrap">
         <div class="game-card__content">
           <div class="game-card__content-front">
@@ -19,28 +25,67 @@ export default {
   props: {
     img: String,
     id: Number,
+    fakeId: Number
   },
   data: function () {
     return {
-      isActiveCart: false,
-      delay: 2000 // 2 сек
+      delay: 5000 // 2 сек
     }
   },
   methods: {
+    isActiveTwoCard: function () {
+      if (this.$store.state.currentCardArray.length === 2) {
+        return true
+      }
+
+      return false;
+    },
+    isMatchCards: function () {
+      return this.$store.state.currentCardArray[0] === this.$store.state.currentCardArray[1];
+    },
+    deactivatingAllCards: function () {
+      this.$store.commit('DEACTIVATE_ALL')
+      this.$store.commit('CLEAR_CURRENT_ARR')
+    },
     changeCard: function (e) {
+      if (this.isActiveTwoCard()) {
+        console.log('Ошибка. Активный две карты.')
+        return;
+      }
+
       this.activatingCard()
+
+
+      if (this.isActiveTwoCard()) {
+        if (this.isMatchCards()) {
+          this.$store.commit('FOUND_CARD')
+        } else {
+          setTimeout(() => {
+            this.deactivatingAllCards();
+          }, 1000)
+        }
+      }
+
 
       setTimeout(() => {
         this.deactivateCard()
       }, this.delay)
     },
     activatingCard: function () {
-      this.isActiveCart = true;
-      this.$emit('pushCard', this.id)
+      this.$store.commit('ACTIVATING_CART', this.id)
+      this.$store.commit('PUSH_CARD', this.fakeId);
     },
     deactivateCard: function () {
-      this.isActiveCart = false;
-      this.$emit('removeCard', this.id)
+      this.$store.commit('DEACTIVATING_CART', this.id)
+      this.$store.commit('REMOVE_CARD', this.fakeId);
+    }
+  },
+  computed: {
+    isActiveCart: function () {
+      return this.$store.state.cards.find(item => item.id === this.id).active;
+    },
+    isFound: function () {
+      return this.$store.state.cards.find(item => item.fakeId === this.fakeId).isFound;
     }
   }
 }
@@ -51,7 +96,12 @@ export default {
     width: calc((100% / 6) - 10px);
     margin-bottom: 10px;
 
+    &.found {
+      opacity: 0;
+      pointer-events: none;
+    }
     &.active {
+      pointer-events: none;
       & .game-card {
         &__content-back {
           transform: rotateY(360deg);
