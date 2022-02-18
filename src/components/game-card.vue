@@ -29,63 +29,92 @@ export default {
   },
   data: function () {
     return {
-      delay: 5000 // 2 сек
+      delay: 5000, // 2 сек
     }
   },
   methods: {
-    isActiveTwoCard: function () {
-      if (this.$store.state.currentCardArray.length === 2) {
-        return true
-      }
-
-      return false;
-    },
-    isMatchCards: function () {
-      return this.$store.state.currentCardArray[0] === this.$store.state.currentCardArray[1];
-    },
-    deactivatingAllCards: function () {
-      this.$store.commit('DEACTIVATE_ALL')
-      this.$store.commit('CLEAR_CURRENT_ARR')
-    },
-    changeCard: function (e) {
+    changeCard: function () {
       if (this.isActiveTwoCard()) {
-        console.log('Ошибка. Активный две карты.')
         return;
       }
 
-      this.activatingCard()
+      if (!this.isGameLaunched()) {
+        this.startGame();
+      }
 
+      this.activatingCard();
+      this.compareCard()
+    },
 
+    isActiveTwoCard: function () {
+      return this.$store.state.currentGameData.comparedCards.length === 2;
+    },
+    isMatchCards: function () {
+      return this.$store.state.currentGameData.comparedCards[0] === this.$store.state.currentGameData.comparedCards[1];
+    },
+    deactivatingAllCards: function () {
+      this.$store.commit('DEACTIVATE_ALL')
+      this.$store.commit('CLEAR_COMPARISON_ALL')
+    },
+    startGame: function () {
+      this.$store.commit('SET_START_TIME'); // Добавляем время начала игры
+      this.$store.commit('START_GAME'); // Запускаем игру
+    },
+    compareCard: function () {
       if (this.isActiveTwoCard()) {
         if (this.isMatchCards()) {
-          this.$store.commit('FOUND_CARD')
+          setTimeout(() => {
+            this.foundCard();
+          }, 500)
         } else {
           setTimeout(() => {
             this.deactivatingAllCards();
-          }, 1000)
+          }, 500)
         }
+        return;
       }
-
-
-      setTimeout(() => {
-        this.deactivateCard()
-      }, this.delay)
+    },
+    foundCard: function () {
+      this.$store.commit('FOUND_CARD');
+      this.$store.commit('CLEAR_COMPARISON_ALL');
     },
     activatingCard: function () {
       this.$store.commit('ACTIVATING_CART', this.id)
-      this.$store.commit('PUSH_CARD', this.fakeId);
+      this.$store.commit('PUSH_TO_COMPARE', this.fakeId);
     },
     deactivateCard: function () {
-      this.$store.commit('DEACTIVATING_CART', this.id)
-      this.$store.commit('REMOVE_CARD', this.fakeId);
-    }
+      if (this.cartInStore.active) {
+        this.$store.commit('DEACTIVATING_CART', this.id)
+        this.$store.commit('UNPUSH_TO_COMPARE', this.fakeId);
+      }
+    },
+    isGameLaunched: function() {
+      return this.$store.state.currentGameData.gameLaunched;
+    },
   },
   computed: {
+    cartInStore: function () {
+      return this.$store.state.globalData.cards.find(item => item.id === this.id)
+    },
     isActiveCart: function () {
-      return this.$store.state.cards.find(item => item.id === this.id).active;
+      return this.cartInStore.active;
     },
     isFound: function () {
-      return this.$store.state.cards.find(item => item.fakeId === this.fakeId).isFound;
+      return this.$store.state.globalData.cards.find(item => item.fakeId === this.fakeId).isFound;
+    }
+  },
+  watch: {
+    isActiveCart: function (newValue, oldValue) {
+      if (newValue === false, oldValue) {
+        // Карточка закрылась
+        clearTimeout(this.timeOutCard)
+      }
+      if (newValue, oldValue === false) {
+        // Карточка открылась
+        this.timeOutCard = setTimeout(() => {
+          this.deactivateCard()
+        }, this.delay)
+      }
     }
   }
 }
@@ -99,6 +128,7 @@ export default {
     &.found {
       opacity: 0;
       pointer-events: none;
+      transition: .5s;
     }
     &.active {
       pointer-events: none;
@@ -151,9 +181,12 @@ export default {
       background-color: #fff;
       transform: rotateY(180deg);
       padding: 6px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       & img {
-        width: 100%;
-        height: 100%;
+        max-width: 100%;
+        max-height: 100%;
       }
     }
   }

@@ -1,19 +1,54 @@
 <template>
-  <div id="app">
-    <Game />
-    <div class="management">
-
+  <div id="app" class="app">
+    <div class="app__wrap">
+      <Game :key="gameKey" />
+      <Management />
     </div>
   </div>
 </template>
 
 <script>
-import Game from './components/game'
+import Game from './components/game';
+import Management from './components/management'
 
 export default {
   name: 'App',
+  data: function () {
+    return {
+      gameKey: 1,
+    }
+  },
+  methods: {
+    reRenderCards: function (value) {
+      this.gameKey = value;
+    },
+    resetDataForAllCards: function () {
+      this.$store.commit('RESET_ALL_DATA_CARDS')
+    },
+    resetFoundCardImages: function () {
+      this.$store.commit('RESET_ALL_FOUND_CARD_IMG')
+    },
+    resetGame: function (value) {
+      this.resetDataForAllCards()
+      this.reRenderCards(value);
+      this.resetFoundCardImages();
+      // Обнулить список совпадений
+    },
+  },
+  computed: {
+    gameVersion: function () {
+
+      return this.$store.state.currentGameData.gameVersion;
+    },
+  },
   components: {
-    Game
+    Game,
+    Management
+  },
+  watch: {
+    gameVersion: function (value) {
+      this.resetGame(value)
+    }
   }
 }
 </script>
@@ -32,5 +67,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.app__wrap {
+  display: flex;
+  min-width: 1230px;
 }
 </style>

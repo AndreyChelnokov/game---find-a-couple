@@ -18,11 +18,19 @@ export default {
 }
 </script>
 
-<style>
-  .found__card {
-    width: 100px;
-    height: 130px;
-    position: relative;
+<style lang="scss">
+  .found {
+    &__cards {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    &__card {
+      width: 65px;
+      height: 85px;
+      position: relative;
+      margin-right: 14px;
+      margin-bottom: 14px;
+    }
   }
   .found__card-bg, .found__card-front {
     width: 100%;
