@@ -1,7 +1,7 @@
 <template>
   <div class="management-item">
     <div class="management-item__header">
-      <h2>{{ title }}</h2>
+      <h3>{{ title }}</h3>
     </div>
     <div class="management-item__body">
       <slot />
@@ -23,7 +23,7 @@ export default {
     margin-bottom: 30px;
     &__header {
       margin-bottom: 10px;
-      & h2 {
+      & h3 {
         text-align: left;
         margin: 0;
       }

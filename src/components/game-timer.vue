@@ -12,17 +12,24 @@ export default {
     return {
       startTime: new Date().getTime(),
       milliseconds: '',
-      seconds: '00',
-      minutes: '00'
+      seconds: '0',
+      minutes: '0'
     }
   },
   methods: {
+    getOffsetTime: function () {
+      return new Date().getTime() - this.timeStartCurrentGame;
+    },
+    getMilliseconds: function () {
+      const offsetTimer = this.getOffsetTime();
+      return (offsetTimer - this.timeStartCurrentGame) % 1000;
+    },
     getSeconds: function () {
-      const offsetTimer = new Date().getTime() - this.$store.state.currentGameData.startTime;
+      const offsetTimer = this.getOffsetTime();
       return Math.floor(offsetTimer / 1000 % 60);
     },
     getMinutes: function () {
-      const offsetTimer = new Date().getTime() - this.$store.state.currentGameData.startTime;
+      const offsetTimer = this.getOffsetTime();
       return Math.floor(offsetTimer / 1000 / 60 % 60);
     },
     updateSeconds: function () {
@@ -50,7 +57,7 @@ export default {
       this.setInterval = clearInterval(this.setInterval); // Останавливаем обновление таймера
       this.$store.commit('ADD_NEW_RESULT_LAST_TIMER', {
         seconds: this.seconds,
-        milliseconds: (new Date().getTime() - this.$store.state.currentGameData.startTime) % 1000,
+        milliseconds: this.getMilliseconds(),
         minutes: this.minutes
       }) // Добавляем результаты игры в таблицу
       this.$store.commit('RESET_START_TIMER'); // Обнуляем время начала игры
@@ -59,6 +66,9 @@ export default {
     },
   },
   computed: {
+    timeStartCurrentGame: function () {
+      return this.$store.state.currentGameData.startTime;
+    },
     isGameLaunched: function () {
       return this.$store.state.currentGameData.gameLaunched;
     },

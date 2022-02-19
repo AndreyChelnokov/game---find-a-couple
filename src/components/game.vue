@@ -10,11 +10,11 @@
       />
     </div>
 
-    <div @click="resetGame" class="game__overlay" :class="{ active: isActiveGameOverlay }">
+    <div @click="startNewGame" class="game__overlay" :class="{ active: isActiveGameOverlay }">
       Чтобы начать новую игру - кликните сдесь!
     </div>
 
-    <GameModal @sendModal="sendModal" :is-active="modalActive" />
+    <GameModal @sendModal="sendModal" :is-active="isModalActive" />
   </div>
 </template>
 
@@ -26,7 +26,7 @@ export default {
   name: 'Game',
   data: function () {
     return {
-      modalActive: false,
+      isModalActive: false,
       isActiveGameOverlay: false,
     }
   },
@@ -34,19 +34,19 @@ export default {
     cards: function () {
       return this.$store.state.globalData.cards;
     },
-    // doubleArray: function () {
-    //   return [...this.cards, ...this.cards]
-    // },
     cardsInRandomOrder: function () {
       return this.compareRandom(this.cards)
     },
-    isFinal: function () {
-      return this.$store.getters.getCountFoundCards === this.$store.state.globalData.cards.length / 2;
+    timeResultGame: function () {
+      return this.$store.state.globalData.resultLastTimer;
+    },
+    isFoundAllCards : function () {
+      return this.$store.getters.isFoundAllCards;
     }
   },
   methods: {
-    resetGame: function () {
-      this.$store.commit('UPDATE_GAME_VERSION')
+    startNewGame: function () {
+      this.$store.commit('UPDATE_GAME_VERSION');
     },
     compareRandom: function (arr) {
       let count = 0;
@@ -57,28 +57,42 @@ export default {
 
       return arr.sort(rand);
     },
-    endGame: function () {
-      this.$store.commit('END_GAME'); // Завершаем игру
-      this.modalActive = true; // Открыть модалку
+
+    commitResultGame: function (userName) {
+      this.$store.commit('ADD_NEW_RESULT', { name: userName, time: this.timeResultGame })
+    },
+
+    switchOffGame: function () {
+      this.$store.dispatch('finishGame');
       this.isActiveGameOverlay = true;
     },
+
+    // result modal
+    openModal: function () {
+      this.isModalActive = true;
+    },
+    hiddenModal: function () {
+      this.isModalActive = false;
+    },
     sendModal: function (userName) {
-      this.modalActive = false;
+      this.hiddenModal()
       this.commitResultGame(userName)
     },
-    commitResultGame: function (userName) {
-      const resultTime = this.$store.state.globalData.resultLastTimer;
-      this.$store.commit('ADD_NEW_RESULT', { name: userName, time: resultTime })
-    }
+
+    eventEndGame: function () {
+      this.switchOffGame();
+      this.openModal();
+    },
   },
   components: {
     GameCard,
     GameModal,
   },
   watch: {
-    isFinal: function (value) {
-      if (value) {
-        this.endGame();
+    isFoundAllCards: function (newValue) {
+      // Если все карты совпали
+      if (newValue === true) {
+        this.eventEndGame()
       }
     }
   }

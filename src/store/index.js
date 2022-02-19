@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { doubleArray } from "../utils";
 
 Vue.use(Vuex)
 
@@ -15,513 +16,8 @@ export default new Vuex.Store({
     globalData: {
       resultLastTimer: '',
       result: [],
-      cards: [
-        {
-          img: 'hamster/1.JPG',
-          id: 1,
-          fakeId: 1,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/1.JPG',
-          id: 2,
-          fakeId: 1,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/2.JPG',
-          id: 3,
-          fakeId: 2,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/2.JPG',
-          id: 4,
-          fakeId: 2,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/3.JPG',
-          id: 5,
-          fakeId: 3,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/3.JPG',
-          id: 6,
-          fakeId: 3,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/4.JPG',
-          id: 7,
-          fakeId: 4,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/4.JPG',
-          id: 8,
-          fakeId: 4,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/5.JPG',
-          id: 9,
-          fakeId: 5,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/5.JPG',
-          id: 10,
-          fakeId: 5,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/6.JPG',
-          id: 11,
-          fakeId: 6,
-          active: false,
-          isFound: false,
-        },{
-          img: 'hamster/6.JPG',
-          id: 12,
-          fakeId: 6,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/7.JPG',
-          id: 13,
-          fakeId: 7,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/7.JPG',
-          id: 14,
-          fakeId: 7,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/8.JPG',
-          id: 15,
-          fakeId: 8,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/8.JPG',
-          id: 16,
-          fakeId: 8,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/9.JPG',
-          id: 17,
-          fakeId: 9,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/9.JPG',
-          id: 18,
-          fakeId: 9,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/10.JPG',
-          id: 19,
-          fakeId: 10,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/10.JPG',
-          id: 20,
-          fakeId: 10,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/11.JPG',
-          id: 21,
-          fakeId: 11,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/11.JPG',
-          id: 22,
-          fakeId: 11,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/12.JPG',
-          id: 23,
-          fakeId: 12,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/12.JPG',
-          id: 24,
-          fakeId: 12,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/13.JPG',
-          id: 25,
-          fakeId: 13,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/13.JPG',
-          id: 26,
-          fakeId: 13,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/14.JPG',
-          id: 27,
-          fakeId: 14,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/14.JPG',
-          id: 28,
-          fakeId: 14,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/15.JPG',
-          id: 29,
-          fakeId: 15,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/15.JPG',
-          id: 30,
-          fakeId: 15,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/16.JPG',
-          id: 31,
-          fakeId: 16,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/16.JPG',
-          id: 32,
-          fakeId: 16,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/17.JPG',
-          id: 33,
-          fakeId: 17,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/17.JPG',
-          id: 34,
-          fakeId: 17,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/18.jpg',
-          id: 35,
-          fakeId: 18,
-          active: false,
-          isFound: false,
-        },
-        {
-          img: 'hamster/18.jpg',
-          id: 36,
-          fakeId: 18,
-          active: false,
-          isFound: false,
-        }
-      ],
-      // cards: [
-      //   {
-      //     img: '1.jpeg',
-      //     id: 1,
-      //     fakeId: 1,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '1.jpeg',
-      //     id: 2,
-      //     fakeId: 1,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '2.jpeg',
-      //     id: 3,
-      //     fakeId: 2,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '2.jpeg',
-      //     id: 4,
-      //     fakeId: 2,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '3.jpeg',
-      //     id: 5,
-      //     fakeId: 3,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '3.jpeg',
-      //     id: 6,
-      //     fakeId: 3,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '4.jpeg',
-      //     id: 7,
-      //     fakeId: 4,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '4.jpeg',
-      //     id: 8,
-      //     fakeId: 4,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '5.jpeg',
-      //     id: 9,
-      //     fakeId: 5,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '5.jpeg',
-      //     id: 10,
-      //     fakeId: 5,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '6.jpeg',
-      //     id: 11,
-      //     fakeId: 6,
-      //     active: false,
-      //     isFound: false,
-      //   },{
-      //     img: '6.jpeg',
-      //     id: 12,
-      //     fakeId: 6,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '7.jpeg',
-      //     id: 13,
-      //     fakeId: 7,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '7.jpeg',
-      //     id: 14,
-      //     fakeId: 7,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '8.png',
-      //     id: 15,
-      //     fakeId: 8,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '8.png',
-      //     id: 16,
-      //     fakeId: 8,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '9.jpeg',
-      //     id: 17,
-      //     fakeId: 9,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '9.jpeg',
-      //     id: 18,
-      //     fakeId: 9,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '10.png',
-      //     id: 19,
-      //     fakeId: 10,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '10.png',
-      //     id: 20,
-      //     fakeId: 10,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '11.png',
-      //     id: 21,
-      //     fakeId: 11,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '11.png',
-      //     id: 22,
-      //     fakeId: 11,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '12.png',
-      //     id: 23,
-      //     fakeId: 12,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '12.png',
-      //     id: 24,
-      //     fakeId: 12,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '13.jpeg',
-      //     id: 25,
-      //     fakeId: 13,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '13.jpeg',
-      //     id: 26,
-      //     fakeId: 13,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '14.jpeg',
-      //     id: 27,
-      //     fakeId: 14,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '14.jpeg',
-      //     id: 28,
-      //     fakeId: 14,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '15.png',
-      //     id: 29,
-      //     fakeId: 15,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '15.png',
-      //     id: 30,
-      //     fakeId: 15,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '16.jpeg',
-      //     id: 31,
-      //     fakeId: 16,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '16.jpeg',
-      //     id: 32,
-      //     fakeId: 16,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '17.jpeg',
-      //     id: 33,
-      //     fakeId: 17,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '17.jpeg',
-      //     id: 34,
-      //     fakeId: 17,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '18.jpeg',
-      //     id: 35,
-      //     fakeId: 18,
-      //     active: false,
-      //     isFound: false,
-      //   },
-      //   {
-      //     img: '18.jpeg',
-      //     id: 36,
-      //     fakeId: 18,
-      //     active: false,
-      //     isFound: false,
-      //   }
-      // ]
-    },
+      cards: [],
+      },
   },
   mutations: {
     UPDATE_GAME_VERSION: (state) => {
@@ -595,14 +91,46 @@ export default new Vuex.Store({
       })
     },
 
+    ADD_CARD: (state, value) => {
+      state.globalData.cards = value;
+    }
+
   },
   actions: {
+    getCards: (context, variant = 0) => {
+      fetch('./data.json')
+          .then(r => r.json())
+          .then(r => {
+            return doubleArray(r[variant]);
+          })
+          .then(arr => {
+            const newArr = JSON.parse(JSON.stringify(arr)).map((card, index) => {
+              card.id = index + 1;
+              return card
+            })
+
+            return newArr;
+          })
+          .then(arr => {
+            context.commit('ADD_CARD', arr)
+          })
+    },
+    finishGame: (context) => {
+      context.commit('END_GAME');
+    },
+    updateGame: (context) => {
+      context.commit('END_GAME');
+      context.commit('UPDATE_GAME_VERSION');
+    }
   },
   modules: {
   },
   getters: {
     getCountFoundCards: function (state) {
       return state.globalData.cards.filter(item => item.isFound).length;
+    },
+    isFoundAllCards: function (state) {
+      return state.globalData.cards.filter(item => item.isFound).length === state.globalData.cards.length / 2;
     }
   }
 })

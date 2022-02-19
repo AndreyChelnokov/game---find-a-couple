@@ -37,7 +37,6 @@ export default {
   },
   computed: {
     gameVersion: function () {
-
       return this.$store.state.currentGameData.gameVersion;
     },
   },
@@ -49,6 +48,9 @@ export default {
     gameVersion: function (value) {
       this.resetGame(value)
     }
+  },
+  mounted() {
+    this.$store.dispatch('getCards')
   }
 }
 </script>
@@ -71,9 +73,11 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  padding: 30px;
 }
 .app__wrap {
   display: flex;
+  align-items: flex-start;
   min-width: 1230px;
 }
 </style>
