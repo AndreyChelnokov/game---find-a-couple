@@ -13,7 +13,10 @@
 export default {
   name: 'GameFound',
   props: {
-    img: String
+    img: {
+      type: String,
+      required: true,
+    },
   }
 }
 </script>

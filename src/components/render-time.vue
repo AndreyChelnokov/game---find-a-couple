@@ -11,11 +11,23 @@
 export default {
   name: 'RenderTime',
   props: {
-    className: String,
-    minutes: Number,
-    seconds: Number,
-    milliseconds: Number
-  }
+    className: {
+      type: String,
+      required: false,
+    },
+    minutes: {
+      type: Number,
+      required: false,
+    },
+    seconds: {
+      type: Number,
+      required: false,
+    },
+    milliseconds: {
+      type: Number,
+      required: false,
+    },
+  },
 }
 </script>
 

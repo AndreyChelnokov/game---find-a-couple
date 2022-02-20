@@ -11,9 +11,10 @@
             <GameTimer />
           </ManagementItem>
           <ManagementItem v-if="foundCardImgList" :title="'Вы уже нашли:'">
-            <div class="found__cards">
+            <div v-if="isNoEmptyFoundCardImgList" class="found__cards">
               <GameFound v-for="(img, index) in foundCardImgList" :key="index" :img="img" />
             </div>
+            <div v-else class="">Поки ничего не нашли :(</div>
           </ManagementItem>
         </div>
       </div>
@@ -51,6 +52,9 @@ export default {
   computed: {
     foundCardImgList: function () {
       return this.$store.state.currentGameData.foundCardsArrayImg;
+    },
+    isNoEmptyFoundCardImgList: function () {
+      return this.foundCardImgList.length > 0;
     },
     isGameLaunched: function () {
       return this.$store.state.currentGameData.gameLaunched;

@@ -23,9 +23,18 @@
 export default {
   name: 'GameCard',
   props: {
-    img: String,
-    id: Number,
-    fakeId: Number
+    img: {
+      type: String,
+      required: true,
+    },
+    id: {
+      type: Number,
+      required: true,
+    },
+    fakeId: {
+      type: Number,
+      required: true,
+    },
   },
   data: function () {
     return {

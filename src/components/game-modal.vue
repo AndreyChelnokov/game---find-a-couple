@@ -25,7 +25,10 @@ import RenderTime from './render-time';
 export default {
   name: 'GameModal',
   props: {
-    isActive: Boolean,
+    isActive: {
+      type: Boolean,
+      required: true,
+    },
   },
   data: function () {
     return {

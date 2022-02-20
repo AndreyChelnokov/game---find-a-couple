@@ -13,7 +13,10 @@
 export default {
   name: 'ManagementItem',
   props: {
-    title: String,
+    title: {
+      type: String,
+      required: false,
+    },
   }
 }
 </script>
@@ -27,6 +30,9 @@ export default {
         text-align: left;
         margin: 0;
       }
+    }
+    &__body {
+      text-align: left;
     }
   }
 </style>

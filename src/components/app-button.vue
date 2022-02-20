@@ -8,7 +8,10 @@
 export default {
   name: 'AppButton',
   props: {
-    className: String
+    className: {
+      type: String,
+      required: false,
+    },
   }
 }
 </script>
